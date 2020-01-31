@@ -1,15 +1,15 @@
 <template>
   <v-app>
-    <member-table/>
+    <member-page/>
   </v-app>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { MemberTable } from "./components";
+import { MemberPage } from "./components";
 
 export default Vue.extend({
   name: "App",
-  components: { MemberTable }
+  components: { MemberPage }
 });
 </script>

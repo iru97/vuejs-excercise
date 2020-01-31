@@ -1,21 +1,31 @@
 <template>
-  <div>
-    <h2>Member Page</h2>
-    <v-row>
-      <v-col cols="12" sm="2" md="2">
-        <v-text-field label="Organization" v-model="organization"></v-text-field>
-      </v-col>
-      <v-col cols="12" sm="2" md="2">
-        <v-btn @click="loadMembers"><v-icon>mdi-cloud-download</v-icon>Load</v-btn>
-      </v-col>
-    </v-row>
+  <v-card>
+    <v-card-title>
+      <v-text-field
+        v-model="search"
+        label="Search"
+        append-icon="mdi-magnify"
+        single-line
+        hide-details
+      ></v-text-field>
+    </v-card-title>
     <v-data-table
       :headers="headers"
       :items="members"
       :items-per-page="5"
+      :search="search"
       class="elevation-1"
-    ></v-data-table>
-  </div>
+    >
+      <template v-slot:item.avatar_url="{ item }">
+        <v-img :src="item.avatar_url" aspect-ratio="1" alt="Avatar" width="10rem"/>
+      </template>
+      <template v-slot:item.actions="{ item }">
+        <v-btn icon @click="viewDetail(item)">
+          <v-icon large>mdi-eye</v-icon>
+        </v-btn>
+      </template>
+    </v-data-table>
+  </v-card>
 </template>
 
 <script lang="ts">
@@ -25,27 +35,39 @@ import { getAllMembers } from "../../api/memberAPI";
 
 export default Vue.extend({
   name: "MemberTable",
+  props: {
+    members: {
+      type: Array as () => Member[],
+      required: true,
+      default: () => [],
+    }
+  },
   data: () => ({
-    members: [] as Member[],
-    headers: [{
-      text: 'ID',
-      value: 'id',
-    },
-    {
-      text: 'Avatar',
-      value: 'avatar_url',
-    },
-    {
-      text: 'Name',
-      value: 'login',
-    }],
-    organization: 'lemoncode' as string,
+    headers: [
+      {
+        text: "Avatar",
+        value: "avatar_url",
+        filterable: false
+      },
+      {
+        text: "ID",
+        value: "id",
+        filterable: false
+      },
+      {
+        text: "Name",
+        value: "login"
+      },
+      {
+        text: "Actions",
+        value: "actions"
+      }
+    ],
+    search: '' as string,
   }),
   methods: {
-    loadMembers: function() {
-      getAllMembers(this.organization).then(members => {
-        this.members = members;
-      });
+    viewDetail: function(member: Member) {
+      this.$emit('viewDetail', member)
     }
   }
 });
