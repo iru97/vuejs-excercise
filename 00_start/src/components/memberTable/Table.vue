@@ -1,36 +1,49 @@
 <template>
   <div>
     <h2>Member Page</h2>
-    <button @click="loadMembers">Load</button>
-    <table :class="$style.table">
-      <thead>
-        <member-head/>
-      </thead>
-      <tbody>
-        <template v-for="member in members">
-          <member-row :key="member.id" :member="member"/>
-        </template>
-      </tbody>
-    </table>
+    <v-row>
+      <v-col cols="12" sm="2" md="2">
+        <v-text-field label="Organization" v-model="organization"></v-text-field>
+      </v-col>
+      <v-col cols="12" sm="2" md="2">
+        <v-btn @click="loadMembers"><v-icon>mdi-cloud-download</v-icon>Load</v-btn>
+      </v-col>
+    </v-row>
+    <v-data-table
+      :headers="headers"
+      :items="members"
+      :items-per-page="5"
+      class="elevation-1"
+    ></v-data-table>
   </div>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import MemberHead from "./Head.vue";
-import MemberRow from "./Row.vue";
 import { Member } from "../../model/member";
 import { getAllMembers } from "../../api/memberAPI";
 
 export default Vue.extend({
   name: "MemberTable",
-  components: { MemberHead, MemberRow },
   data: () => ({
-    members: [] as Member[]
+    members: [] as Member[],
+    headers: [{
+      text: 'ID',
+      value: 'id',
+    },
+    {
+      text: 'Avatar',
+      value: 'avatar_url',
+    },
+    {
+      text: 'Name',
+      value: 'login',
+    }],
+    organization: 'lemoncode' as string,
   }),
   methods: {
     loadMembers: function() {
-      getAllMembers("lemoncode").then(members => {
+      getAllMembers(this.organization).then(members => {
         this.members = members;
       });
     }
