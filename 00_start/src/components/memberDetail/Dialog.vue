@@ -1,7 +1,10 @@
 <template>
-  <v-dialog persistent  v-model="show" max-width="290" >
+  <v-dialog persistent v-model="show" max-width="40rem">
     <v-card>
       <div class="d-flex flex-no-wrap">
+        <v-avatar class="ma-3" size="300" tile>
+          <v-img :src="member.avatar_url"></v-img>
+        </v-avatar>
         <div>
           <v-card-title class="headline" v-text="member.login"></v-card-title>
           <v-card-subtitle v-text="member.id"></v-card-subtitle>

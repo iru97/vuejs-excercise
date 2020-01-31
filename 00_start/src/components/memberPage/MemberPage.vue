@@ -10,7 +10,7 @@
         <v-btn icon @click="loadMembers"><v-icon>mdi-cloud-download</v-icon></v-btn>
       </v-col>
     </v-row>
-    <member-table v-bind="{members}" @viewDetail="showDialog($event)"></member-table>
+    <member-table v-bind="{members}" @viewDetail="showMemberDetail($event)"></member-table>
   </div>
 </template>
 
@@ -19,7 +19,7 @@ import Vue from "vue";
 import { MemberTable } from "../memberTable";
 import { MemberDetail } from "../memberDetail";
 import { Member } from "../../model/member";
-import { getAllMembers } from "../../api/memberAPI";
+import { getAllMembers, getMemberById } from "../../api/memberAPI";
 
 export default Vue.extend({
   name: "MemberPage",
@@ -37,14 +37,22 @@ export default Vue.extend({
     this.loadMembers();
   },
   methods: {
-    loadMembers: function() {
+    loadMembers() {
       getAllMembers(this.organization).then(members => {
         this.members = members;
       });
     },
-    showDialog(member: Member) {
+    loadMember(id: string) {
+      getMemberById(this.organization, id).then(member => {
+        this.member = member;
+        this.showDialog();
+      });
+    },
+    showMemberDetail(id: string) {
+      this.loadMember(id);
+    },
+    showDialog() {
       this.show = true;
-      this.member = member;
     },
     closeDialog() {
       this.show = false,

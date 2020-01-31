@@ -27,6 +27,16 @@ const resolveMembers = (data: any): Promise<Member[]> => {
   return Promise.resolve(members);
 };
 
+const resolveMember = (data: any): Promise<Member> => {
+  const member = {
+    id: data.id,
+    login: data.login,
+    avatar_url: data.avatar_url,
+  }
+
+  return Promise.resolve(member);
+};
+
 export const getAllMembers = (organizationName: string): Promise<Member[]> => {
   const gitHubMembersUrl: string = `https://api.github.com/orgs/${organizationName}/members`;
 
@@ -34,4 +44,14 @@ export const getAllMembers = (organizationName: string): Promise<Member[]> => {
     .then(response => checkStatus(response))
     .then(response => parseJSON(response))
     .then(data => resolveMembers(data));
+};
+
+export const getMemberById = (organizationName: string, id: string): Promise<Member> => {
+  console.log('llegó')
+  const gitHubMembersUrl: string = `https://api.github.com/orgs/${organizationName}/membership/${id}`;
+
+  return fetch(gitHubMembersUrl)
+    .then(response => checkStatus(response))
+    .then(response => parseJSON(response))
+    .then(data => resolveMember(data));
 };

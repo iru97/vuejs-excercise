@@ -20,7 +20,7 @@
         <v-img :src="item.avatar_url" aspect-ratio="1" alt="Avatar" width="10rem"/>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn icon @click="viewDetail(item)">
+        <v-btn icon @click="viewDetail(item.login)">
           <v-icon large>mdi-eye</v-icon>
         </v-btn>
       </template>
@@ -66,8 +66,8 @@ export default Vue.extend({
     search: '' as string,
   }),
   methods: {
-    viewDetail: function(member: Member) {
-      this.$emit('viewDetail', member)
+    viewDetail: function(id: string) {
+      this.$emit('viewDetail', id)
     }
   }
 });
