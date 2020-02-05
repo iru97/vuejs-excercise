@@ -16,8 +16,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { MemberTable } from "../memberTable";
-import { MemberDetail } from "../memberDetail";
+import { MemberTable, MemberDetail } from "../../common/components";
 import { Member } from "../../model/member";
 import { getAllMembers, getMemberById } from "../../api/memberAPI";
 
@@ -42,13 +41,18 @@ export default Vue.extend({
         this.members = members;
       });
     },
-    loadMember(id: string) {
-      getMemberById(this.organization, id).then(member => {
-        this.member = member;
-        this.showDialog();
-      });
+    loadMember(id: number) {
+      const clickedMember = this.members.find((m) => m.id === id);
+      if (clickedMember) this.member = clickedMember;
+      this.showDialog();
+      // getMemberById(this.organization, id).then(member => {
+      //   this.member = member;
+      //   this.showDialog();
+      // }).catch((err) => {
+      //   alert(`Error loading member | ${err}`);
+      // });
     },
-    showMemberDetail(id: string) {
+    showMemberDetail(id: number) {
       this.loadMember(id);
     },
     showDialog() {

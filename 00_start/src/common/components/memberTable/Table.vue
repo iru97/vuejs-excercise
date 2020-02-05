@@ -20,7 +20,7 @@
         <v-img :src="item.avatar_url" aspect-ratio="1" alt="Avatar" width="10rem"/>
       </template>
       <template v-slot:item.actions="{ item }">
-        <v-btn icon @click="viewDetail(item.login)">
+        <v-btn icon @click="viewDetail(item.id)">
           <v-icon large>mdi-eye</v-icon>
         </v-btn>
       </template>
@@ -30,8 +30,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { Member } from "../../model/member";
-import { getAllMembers } from "../../api/memberAPI";
+import { Member } from "../../../model/member";
 
 export default Vue.extend({
   name: "MemberTable",

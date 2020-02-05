@@ -6,7 +6,7 @@
 
 <script lang="ts">
 import Vue from "vue";
-import { MemberPage } from "./components";
+import { MemberPage } from "./pages/members";
 
 export default Vue.extend({
   name: "App",

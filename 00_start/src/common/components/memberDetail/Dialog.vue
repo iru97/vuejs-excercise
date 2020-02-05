@@ -9,15 +9,17 @@
           <v-card-title class="headline" v-text="member.login"></v-card-title>
           <v-card-subtitle v-text="member.id"></v-card-subtitle>
         </div>
-        <v-btn @click="close">Close</v-btn>
       </div>
+      <v-card-actions>
+        <v-btn @click="close">Close</v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script lang="ts">
 import Vue from "vue";
-import { Member } from "../../model/member";
+import { Member } from "../../../model/member";
 
 export default Vue.extend({
   name: "MemberDetail",
