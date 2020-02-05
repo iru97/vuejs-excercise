@@ -1,6 +1,8 @@
 <template>
   <v-card>
     <v-card-title>
+      Members 
+      <v-spacer></v-spacer>
       <v-text-field
         v-model="search"
         label="Search"
@@ -17,7 +19,7 @@
       class="elevation-1"
     >
       <template v-slot:item.avatar_url="{ item }">
-        <v-img :src="item.avatar_url" aspect-ratio="1" alt="Avatar" width="10rem"/>
+        <v-img :src="item.avatar_url" aspect-ratio="1" alt="Avatar" width="7rem"/>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon @click="viewDetail(item.id)">
